@@ -1,0 +1,45 @@
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+docker-compose.override.yml
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temp
+*.log
+*.tmp
+*.swp
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Build artifacts
+dist/
+build/
+*.zip
+
+# IDE
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Test output
+coverage/
+.junit/
+
+# Website preview
+*.local.html

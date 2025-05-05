@@ -1,0 +1,58 @@
+
+version: '3.8'
+
+services:
+  webgoat:
+    image: webgoat/webgoat-8.2
+    ports:
+      - "8080:8080"
+    restart: always
+
+  mutillidae:
+    image: citizenstig/nowasp
+    ports:
+      - "8081:80"
+    restart: always
+
+  restful-booker:
+    image: markwinteringham/restful-booker
+    ports:
+      - "8082:3001"
+    restart: always
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8083:8080"
+      - "50000:50000"
+    restart: always
+
+  zaproxy:
+    image: owasp/zap2docker-stable
+    ports:
+      - "8084:8080"
+    command: zap.sh -daemon -host 0.0.0.0 -port 8080
+    restart: always
+
+  selenium-hub:
+    image: selenium/hub:4.12.1-20230926
+    ports:
+      - "4444:4444"
+    restart: always
+
+  selenium-chrome:
+    image: selenium/node-chrome:4.12.1-20230926
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    restart: always
+
+  k6:
+    image: grafana/k6
+    command: run /scripts/test.js
+    volumes:
+      - ./performance/k6:/scripts
+    restart: "no"
